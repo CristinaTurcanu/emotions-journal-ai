@@ -7,35 +7,79 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth-guards";
 
-const CORE_EMOTIONS = [
-  "Joy",
-  "Sadness",
-  "Anger",
-  "Fear",
-  "Surprise",
-  "Disgust",
-  "Love",
-  "Shame",
-] as const;
+const NUANCES_BY_EMOTION = {
+  Happiness: [
+    "Happy", "Optimistic", "Inspired", "Hopeful", "Trusting", "Intimate",
+    "Sensitive", "Peaceful", "Thankful", "Loving", "Powerful", "Creative",
+    "Courageous", "Accepted", "Valued", "Respected", "Proud", "Confident",
+    "Successful",
+  ],
+  Sadness: [
+    "Sad", "Hurt", "Embarrassed", "Disappointed", "Depressed", "Unseen",
+    "Empty", "Guilty", "Remorseful", "Ashamed", "Despair", "Grief",
+    "Powerless", "Vulnerable", "Victimised", "Fragile", "Lonely", "Isolated",
+    "Abandoned",
+  ],
+  Fear: [
+    "Fearful", "Scared", "Helpless", "Frightened", "Anxious", "Concerned",
+    "Worried", "Insecure", "Inadequate", "Inferior", "Weak", "Worthless",
+    "Insignificant", "Rejected", "Excluded", "Persecuted", "Threatened",
+    "Nervous", "Exposed",
+  ],
+  Anger: [
+    "Angry", "Let down", "Betrayed", "Resentful", "Humiliated", "Disrespected",
+    "Ridiculed", "Bitter", "Indignant", "Violated", "Mad", "Furious",
+    "Jealous", "Aggressive", "Provoked", "Hostile", "Frustrated", "Infuriated",
+    "Annoyed",
+  ],
+  Surprise: [
+    "Surprised", "Excited", "Energetic", "Eager", "Amazed", "Awe",
+    "Astonished", "Confused", "Perplexed", "Disillusioned", "Startled",
+    "Dismayed", "Shocked",
+  ],
+  Disgust: [
+    "Disgusted", "Disapproving", "Judgmental", "Condemned", "Uncomfortable",
+    "Appalled", "Revolted", "Awful", "Nauseated", "Detestable", "Repelled",
+    "Horrified",
+  ],
+  Bad: [
+    "Bad", "Tired", "Unfocused", "Sleepy", "Stressed", "Out of control",
+    "Overwhelmed", "Busy", "Rushed", "Pressured", "Bored", "Apathetic",
+    "Indifferent",
+  ],
+} as const;
 
-const entrySchema = z.object({
-  core_emotion: z.enum(CORE_EMOTIONS),
-  nuance: z
-    .string()
-    .trim()
-    .max(120, "Keep the nuance short")
-    .optional()
-    .transform((v) => (v ? v : null)),
-  intensity: z.coerce.number().int().min(1).max(5),
-  body_sensations: z.array(z.string().trim().min(1)).max(20).default([]),
-  need: z
-    .string()
-    .trim()
-    .max(120, "Keep the need short")
-    .optional()
-    .transform((v) => (v ? v : null)),
-  is_shared: z.coerce.boolean().default(false),
-});
+const CORE_EMOTIONS = Object.keys(NUANCES_BY_EMOTION) as Array<
+  keyof typeof NUANCES_BY_EMOTION
+>;
+
+const entrySchema = z
+  .object({
+    core_emotion: z.enum(CORE_EMOTIONS as [string, ...string[]]),
+    nuance: z
+      .string()
+      .trim()
+      .max(120, "Keep the nuance short")
+      .optional()
+      .transform((v) => (v ? v : null)),
+    intensity: z.coerce.number().int().min(1).max(5),
+    body_sensations: z.array(z.string().trim().min(1)).max(20).default([]),
+    need: z
+      .string()
+      .trim()
+      .max(120, "Keep the need short")
+      .optional()
+      .transform((v) => (v ? v : null)),
+    is_shared: z.coerce.boolean().default(false),
+  })
+  .refine(
+    (data) =>
+      data.nuance === null ||
+      (NUANCES_BY_EMOTION[
+        data.core_emotion as keyof typeof NUANCES_BY_EMOTION
+      ] as readonly string[]).includes(data.nuance),
+    { message: "Nuance must match the selected core emotion", path: ["nuance"] },
+  );
 
 export type EntryFormState = { error?: string } | undefined;
 
