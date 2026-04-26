@@ -1,23 +1,58 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useId } from "react";
+import { useActionState, useId, useState } from "react";
 import {
   createEntryAction,
   updateEntryAction,
   type EntryFormState,
 } from "@/lib/actions/entries";
 
-const CORE_EMOTIONS = [
-  "Joy",
-  "Sadness",
-  "Anger",
-  "Fear",
-  "Surprise",
-  "Disgust",
-  "Love",
-  "Shame",
-] as const;
+const NUANCES_BY_EMOTION = {
+  Happiness: [
+    "Happy", "Optimistic", "Inspired", "Hopeful", "Trusting", "Intimate",
+    "Sensitive", "Peaceful", "Thankful", "Loving", "Powerful", "Creative",
+    "Courageous", "Accepted", "Valued", "Respected", "Proud", "Confident",
+    "Successful",
+  ],
+  Sadness: [
+    "Sad", "Hurt", "Embarrassed", "Disappointed", "Depressed", "Unseen",
+    "Empty", "Guilty", "Remorseful", "Ashamed", "Despair", "Grief",
+    "Powerless", "Vulnerable", "Victimised", "Fragile", "Lonely", "Isolated",
+    "Abandoned",
+  ],
+  Fear: [
+    "Fearful", "Scared", "Helpless", "Frightened", "Anxious", "Concerned",
+    "Worried", "Insecure", "Inadequate", "Inferior", "Weak", "Worthless",
+    "Insignificant", "Rejected", "Excluded", "Persecuted", "Threatened",
+    "Nervous", "Exposed",
+  ],
+  Anger: [
+    "Angry", "Let down", "Betrayed", "Resentful", "Humiliated", "Disrespected",
+    "Ridiculed", "Bitter", "Indignant", "Violated", "Mad", "Furious",
+    "Jealous", "Aggressive", "Provoked", "Hostile", "Frustrated", "Infuriated",
+    "Annoyed",
+  ],
+  Surprise: [
+    "Surprised", "Excited", "Energetic", "Eager", "Amazed", "Awe",
+    "Astonished", "Confused", "Perplexed", "Disillusioned", "Startled",
+    "Dismayed", "Shocked",
+  ],
+  Disgust: [
+    "Disgusted", "Disapproving", "Judgmental", "Condemned", "Uncomfortable",
+    "Appalled", "Revolted", "Awful", "Nauseated", "Detestable", "Repelled",
+    "Horrified",
+  ],
+  Bad: [
+    "Bad", "Tired", "Unfocused", "Sleepy", "Stressed", "Out of control",
+    "Overwhelmed", "Busy", "Rushed", "Pressured", "Bored", "Apathetic",
+    "Indifferent",
+  ],
+} as const;
+
+const CORE_EMOTIONS = Object.keys(NUANCES_BY_EMOTION) as Array<
+  keyof typeof NUANCES_BY_EMOTION
+>;
 
 const BODY_SENSATIONS = [
   "Tight chest",
@@ -54,6 +89,21 @@ export function EntryForm({ entry }: { entry?: EntryInput }) {
   );
   const errorId = useId();
 
+  const initialEmotion =
+    entry?.core_emotion && entry.core_emotion in NUANCES_BY_EMOTION
+      ? (entry.core_emotion as keyof typeof NUANCES_BY_EMOTION)
+      : "";
+  const [selectedEmotion, setSelectedEmotion] = useState<
+    keyof typeof NUANCES_BY_EMOTION | ""
+  >(initialEmotion);
+  const availableNuances = selectedEmotion
+    ? NUANCES_BY_EMOTION[selectedEmotion]
+    : [];
+  const initialNuance =
+    entry?.nuance && availableNuances.includes(entry.nuance as never)
+      ? entry.nuance
+      : "";
+
   const sensationSet = new Set(entry?.body_sensations ?? []);
   const cancelHref = "/journal";
 
@@ -68,7 +118,12 @@ export function EntryForm({ entry }: { entry?: EntryInput }) {
           id="core_emotion"
           name="core_emotion"
           required
-          defaultValue={entry?.core_emotion ?? ""}
+          value={selectedEmotion}
+          onChange={(e) =>
+            setSelectedEmotion(
+              e.target.value as keyof typeof NUANCES_BY_EMOTION | "",
+            )
+          }
           className={inputClass}
         >
           <option value="" disabled>
@@ -87,16 +142,23 @@ export function EntryForm({ entry }: { entry?: EntryInput }) {
         htmlFor="nuance"
         hint="A more specific word for what you feel (optional)."
       >
-        <input
+        <select
           id="nuance"
           name="nuance"
-          type="text"
-          maxLength={120}
-          autoComplete="off"
-          placeholder="e.g. wistful, overwhelmed, content"
-          defaultValue={entry?.nuance ?? ""}
+          disabled={!selectedEmotion}
+          defaultValue={initialNuance}
+          key={selectedEmotion}
           className={inputClass}
-        />
+        >
+          <option value="">
+            {selectedEmotion ? "Choose one…" : "Pick a core emotion first"}
+          </option>
+          {availableNuances.map((nuance) => (
+            <option key={nuance} value={nuance}>
+              {nuance}
+            </option>
+          ))}
+        </select>
       </Field>
 
       <fieldset className="flex flex-col gap-3">

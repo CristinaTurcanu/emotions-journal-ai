@@ -11,20 +11,43 @@ vi.mock("@/lib/actions/entries", () => ({
 import { EntryForm } from "@/components/features/entries/EntryForm";
 
 describe("EntryForm", () => {
-  it("renders all eight core emotions", () => {
+  it("renders all seven core emotions from the feelings wheel", () => {
     const html = renderToStaticMarkup(<EntryForm />);
     for (const emotion of [
-      "Joy",
+      "Happiness",
       "Sadness",
-      "Anger",
       "Fear",
+      "Anger",
       "Surprise",
       "Disgust",
-      "Love",
-      "Shame",
+      "Bad",
     ]) {
       expect(html).toContain(`>${emotion}</option>`);
     }
+  });
+
+  it("renders nuance options for the selected core emotion in edit mode", () => {
+    const html = renderToStaticMarkup(
+      <EntryForm
+        entry={{
+          id: "e1",
+          core_emotion: "Sadness",
+          nuance: "Lonely",
+          intensity: 2,
+          body_sensations: [],
+          need: null,
+          is_shared: 0,
+        }}
+      />,
+    );
+    expect(html).toContain(`>Lonely</option>`);
+    expect(html).toContain(`>Grief</option>`);
+    expect(html).not.toContain(`>Happy</option>`);
+  });
+
+  it("disables the nuance dropdown when no core emotion is selected", () => {
+    const html = renderToStaticMarkup(<EntryForm />);
+    expect(html).toMatch(/id="nuance"[^>]*disabled=""/);
   });
 
   it("renders 5 intensity radios with intensity 3 selected by default", () => {
@@ -62,7 +85,7 @@ describe("EntryForm", () => {
         entry={{
           id: "e1",
           core_emotion: "Sadness",
-          nuance: "wistful",
+          nuance: "Lonely",
           intensity: 2,
           body_sensations: ["Warm face"],
           need: "rest",
@@ -80,8 +103,8 @@ describe("EntryForm", () => {
       <EntryForm
         entry={{
           id: "e1",
-          core_emotion: "Joy",
-          nuance: "content",
+          core_emotion: "Happiness",
+          nuance: "Confident",
           intensity: 5,
           body_sensations: ["Warm face", "Tingling hands"],
           need: "connection",
@@ -89,7 +112,7 @@ describe("EntryForm", () => {
         }}
       />,
     );
-    expect(html).toMatch(/id="nuance"[^>]*value="content"/);
+    expect(html).toMatch(/value="Confident"[^>]*selected=""/);
     expect(html).toMatch(/id="need"[^>]*value="connection"/);
     expect(html).toMatch(/checked=""[^>]*value="5"/);
     const checkedSensations = html.match(

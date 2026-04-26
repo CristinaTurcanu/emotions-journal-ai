@@ -84,8 +84,8 @@ async function expectRedirect(promise: Promise<unknown>, url: string) {
 describe("createEntryAction", () => {
   it("inserts an entry, revalidates, and redirects to /journal", async () => {
     const form = fd({
-      core_emotion: "Joy",
-      nuance: "content",
+      core_emotion: "Happiness",
+      nuance: "Confident",
       intensity: "3",
       body_sensations: ["Warm face", "Tingling hands"],
       need: "rest",
@@ -98,8 +98,8 @@ describe("createEntryAction", () => {
     expect(insert!.sql).toMatch(/INSERT INTO entries/);
     expect(insert!.args[0]).toMatch(UUID_RE);
     expect(insert!.args[1]).toBe("user-1");
-    expect(insert!.args[2]).toBe("Joy");
-    expect(insert!.args[3]).toBe("content");
+    expect(insert!.args[2]).toBe("Happiness");
+    expect(insert!.args[3]).toBe("Confident");
     expect(insert!.args[4]).toBe(3);
     expect(insert!.args[5]).toBe(
       JSON.stringify(["Warm face", "Tingling hands"]),
@@ -133,7 +133,7 @@ describe("createEntryAction", () => {
   });
 
   it("returns a validation error for intensity out of range", async () => {
-    const form = fd({ core_emotion: "Joy", intensity: "9" });
+    const form = fd({ core_emotion: "Happiness", intensity: "9" });
     const result = await createEntryAction(undefined, form);
     expect(result).toMatchObject({ error: expect.any(String) });
     expect(redirect).not.toHaveBeenCalled();
@@ -141,12 +141,25 @@ describe("createEntryAction", () => {
 
   it("returns a validation error when nuance is too long", async () => {
     const form = fd({
-      core_emotion: "Joy",
+      core_emotion: "Happiness",
       intensity: "3",
       nuance: "x".repeat(121),
     });
     const result = await createEntryAction(undefined, form);
     expect(result).toMatchObject({ error: expect.stringMatching(/short/i) });
+  });
+
+  it("rejects a nuance that does not belong to the selected core emotion", async () => {
+    const form = fd({
+      core_emotion: "Happiness",
+      intensity: "3",
+      nuance: "Furious",
+    });
+    const result = await createEntryAction(undefined, form);
+    expect(result).toMatchObject({
+      error: expect.stringMatching(/nuance/i),
+    });
+    expect(redirect).not.toHaveBeenCalled();
   });
 });
 
@@ -155,7 +168,7 @@ describe("updateEntryAction", () => {
     nextGet = () => ({ share_token: "existing-tok" });
 
     const form = fd({
-      core_emotion: "Joy",
+      core_emotion: "Happiness",
       intensity: "4",
       is_shared: "on",
     });
@@ -181,7 +194,7 @@ describe("updateEntryAction", () => {
     nextGet = () => ({ share_token: null });
 
     const form = fd({
-      core_emotion: "Joy",
+      core_emotion: "Happiness",
       intensity: "2",
       is_shared: "on",
     });
@@ -201,7 +214,7 @@ describe("updateEntryAction", () => {
   it("keeps the existing share token but flips is_shared to 0 when sharing is unticked", async () => {
     nextGet = () => ({ share_token: "old-tok" });
 
-    const form = fd({ core_emotion: "Joy", intensity: "3" });
+    const form = fd({ core_emotion: "Happiness", intensity: "3" });
 
     await expectRedirect(
       updateEntryAction("entry-1", undefined, form),
@@ -217,7 +230,7 @@ describe("updateEntryAction", () => {
 
   it("returns 'Entry not found' when no row matches id+user", async () => {
     nextGet = () => undefined;
-    const form = fd({ core_emotion: "Joy", intensity: "3" });
+    const form = fd({ core_emotion: "Happiness", intensity: "3" });
 
     const result = await updateEntryAction("missing", undefined, form);
     expect(result).toEqual({ error: "Entry not found" });
