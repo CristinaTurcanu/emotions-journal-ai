@@ -1,0 +1,92 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "Emotions Journal — go to journal" [ref=e5] [cursor=pointer]:
+          - /url: /journal
+          - img [ref=e6]
+          - generic [ref=e9]: Emotions Journal
+        - button "Sign out" [ref=e11]
+    - main [ref=e12]:
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - heading "New entry" [level=1] [ref=e35]
+          - paragraph [ref=e36]: Take a moment. Name what's present.
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - generic [ref=e39]: Core emotion*
+            - combobox "Core emotion" [ref=e40]:
+              - option "Choose one…" [disabled]
+              - option "Joy" [selected]
+              - option "Sadness"
+              - option "Anger"
+              - option "Fear"
+              - option "Surprise"
+              - option "Disgust"
+              - option "Love"
+              - option "Shame"
+          - generic [ref=e41]:
+            - generic [ref=e42]: Nuance
+            - textbox "Nuance" [ref=e43]:
+              - /placeholder: e.g. wistful, overwhelmed, content
+              - text: content
+            - paragraph [ref=e44]: A more specific word for what you feel (optional).
+          - group "Intensity" [ref=e45]:
+            - generic [ref=e46]: Intensity
+            - paragraph [ref=e47]: From 1 (barely there) to 5 (all-consuming).
+            - radiogroup "Intensity from 1 to 5" [ref=e48]:
+              - generic [ref=e49] [cursor=pointer]:
+                - radio "1" [ref=e50]
+                - generic [ref=e51]: "1"
+              - generic [ref=e52] [cursor=pointer]:
+                - radio "2" [ref=e53]
+                - generic [ref=e54]: "2"
+              - generic [ref=e55] [cursor=pointer]:
+                - radio "3" [ref=e56]
+                - generic [ref=e57]: "3"
+              - generic [ref=e58] [cursor=pointer]:
+                - radio "4" [checked] [ref=e59]
+                - generic [ref=e60]: "4"
+              - generic [ref=e61] [cursor=pointer]:
+                - radio "5" [ref=e62]
+                - generic [ref=e63]: "5"
+          - group "Body sensations" [ref=e64]:
+            - generic [ref=e65]: Body sensations
+            - paragraph [ref=e66]: Pick any that apply right now.
+            - generic [ref=e67]:
+              - generic [ref=e68] [cursor=pointer]:
+                - checkbox "Tight chest" [checked] [ref=e69]
+                - generic [ref=e70]: Tight chest
+              - generic [ref=e71] [cursor=pointer]:
+                - checkbox "Shallow breath" [ref=e72]
+                - generic [ref=e73]: Shallow breath
+              - generic [ref=e74] [cursor=pointer]:
+                - checkbox "Heavy shoulders" [ref=e75]
+                - generic [ref=e76]: Heavy shoulders
+              - generic [ref=e77] [cursor=pointer]:
+                - checkbox "Warm face" [checked] [active] [ref=e78]
+                - generic [ref=e79]: Warm face
+              - generic [ref=e80] [cursor=pointer]:
+                - checkbox "Knot in stomach" [ref=e81]
+                - generic [ref=e82]: Knot in stomach
+              - generic [ref=e83] [cursor=pointer]:
+                - checkbox "Racing heart" [ref=e84]
+                - generic [ref=e85]: Racing heart
+              - generic [ref=e86] [cursor=pointer]:
+                - checkbox "Tingling hands" [ref=e87]
+                - generic [ref=e88]: Tingling hands
+              - generic [ref=e89] [cursor=pointer]:
+                - checkbox "Heavy limbs" [ref=e90]
+                - generic [ref=e91]: Heavy limbs
+          - generic [ref=e92]:
+            - generic [ref=e93]: Unmet need
+            - textbox "Unmet need" [ref=e94]:
+              - /placeholder: e.g. rest, connection, clarity
+            - paragraph [ref=e95]: What might you be needing? (optional)
+          - generic [ref=e96]:
+            - link "Cancel" [ref=e97] [cursor=pointer]:
+              - /url: /journal
+            - button "Save entry" [ref=e98]
+  - button "Open Next.js Dev Tools" [ref=e28] [cursor=pointer]:
+    - img [ref=e29]
+  - alert [ref=e32]

@@ -1,0 +1,49 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "Emotions Journal — go to journal" [ref=e5] [cursor=pointer]:
+          - /url: /journal
+          - img [ref=e6]
+          - generic [ref=e9]: Emotions Journal
+        - button "Sign out" [ref=e11]
+    - main [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - heading "Welcome back, Playwright Test" [level=1] [ref=e16]
+            - paragraph [ref=e17]: A quiet space to log what you're feeling.
+          - link "Add new entry" [ref=e18] [cursor=pointer]:
+            - /url: /entries/new
+            - generic [ref=e19]: +
+            - text: Add new entry
+        - generic [ref=e20]:
+          - heading "Your entries" [level=2] [ref=e21]
+          - list [ref=e22]:
+            - listitem [ref=e23]:
+              - generic [ref=e24]:
+                - generic [ref=e25]:
+                  - generic [ref=e26]: Joy
+                  - generic [ref=e27]: calm
+                - generic "Intensity 4 of 5" [ref=e28]: 4/5
+              - list [ref=e29]:
+                - listitem [ref=e30]: Tight chest
+                - listitem [ref=e31]: Warm face
+              - paragraph [ref=e32]: "Need: rest"
+              - generic [ref=e33]:
+                - time [ref=e34]: Apr 25, 2026, 9:01 PM
+                - generic [ref=e35]:
+                  - link "Edit" [ref=e36] [cursor=pointer]:
+                    - /url: /entries/d7a9de78-5c40-4fb3-b6db-ba11cca1ac51/edit
+                  - button "Delete" [ref=e37]
+                  - dialog [ref=e48]:
+                    - generic [ref=e49]:
+                      - generic [ref=e50]:
+                        - heading "Delete this entry?" [level=2] [ref=e51]
+                        - paragraph [ref=e52]: This action cannot be undone.
+                      - generic [ref=e53]:
+                        - button "Cancel" [active] [ref=e54]
+                        - button "Confirm delete" [ref=e56]
+  - button "Open Next.js Dev Tools" [ref=e43] [cursor=pointer]:
+    - img [ref=e44]
+  - alert [ref=e47]

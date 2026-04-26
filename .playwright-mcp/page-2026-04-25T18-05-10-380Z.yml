@@ -1,0 +1,25 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e43] [cursor=pointer]:
+    - img [ref=e44]
+  - alert [ref=e47]
+  - generic [ref=e139]:
+    - banner [ref=e140]:
+      - generic [ref=e141]:
+        - link "Emotions Journal — go to journal" [ref=e142] [cursor=pointer]:
+          - /url: /journal
+          - img [ref=e143]
+          - generic [ref=e146]: Emotions Journal
+        - button "Sign out" [ref=e148]
+    - main [ref=e149]:
+      - generic [ref=e150]:
+        - generic [ref=e151]:
+          - generic [ref=e152]:
+            - heading "Welcome back, Playwright Test" [level=1] [ref=e153]
+            - paragraph [ref=e154]: A quiet space to log what you're feeling.
+          - link "Add new entry" [ref=e155] [cursor=pointer]:
+            - /url: /entries/new
+            - generic [ref=e156]: +
+            - text: Add new entry
+        - generic [ref=e157]:
+          - heading "Your entries" [level=2] [ref=e158]
+          - paragraph [ref=e159]: No entries yet.

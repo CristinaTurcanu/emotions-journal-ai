@@ -1,0 +1,22 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - paragraph [ref=e4]: Emotions Journal
+      - heading "A quiet place for whatever you're feeling." [level=1] [ref=e5]
+      - paragraph [ref=e6]: Take a breath. Name the emotion. Notice where it lives in your body. Small, honest check-ins, kept private and close at hand.
+      - generic [ref=e7]:
+        - link "Start journaling" [ref=e8] [cursor=pointer]:
+          - /url: /login?mode=register
+        - link "I already have an account" [ref=e9] [cursor=pointer]:
+          - /url: /login
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - term [ref=e12]: Feel
+          - definition [ref=e13]: Name core emotions and the softer nuances underneath.
+        - generic [ref=e14]:
+          - term [ref=e15]: Notice
+          - definition [ref=e16]: Log body sensations and intensity — one to five.
+        - generic [ref=e17]:
+          - term [ref=e18]: Reflect
+          - definition [ref=e19]: Write private notes. Share one only when you choose.
+  - alert [ref=e20]

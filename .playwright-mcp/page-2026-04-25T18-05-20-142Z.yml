@@ -1,0 +1,91 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e43] [cursor=pointer]:
+    - img [ref=e44]
+  - alert [ref=e47]
+  - generic [ref=e139]:
+    - banner [ref=e140]:
+      - generic [ref=e141]:
+        - link "Emotions Journal — go to journal" [ref=e142] [cursor=pointer]:
+          - /url: /journal
+          - img [ref=e143]
+          - generic [ref=e146]: Emotions Journal
+        - button "Sign out" [ref=e148]
+    - main [ref=e149]:
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - heading "New entry" [level=1] [ref=e162]
+          - paragraph [ref=e163]: Take a moment. Name what's present.
+        - generic [ref=e164]:
+          - generic [ref=e165]:
+            - generic [ref=e166]: Core emotion*
+            - combobox "Core emotion" [ref=e167]:
+              - option "Choose one…" [disabled] [selected]
+              - option "Joy"
+              - option "Sadness"
+              - option "Anger"
+              - option "Fear"
+              - option "Surprise"
+              - option "Disgust"
+              - option "Love"
+              - option "Shame"
+          - generic [ref=e168]:
+            - generic [ref=e169]: Nuance
+            - textbox "Nuance" [ref=e170]:
+              - /placeholder: e.g. wistful, overwhelmed, content
+            - paragraph [ref=e171]: A more specific word for what you feel (optional).
+          - group "Intensity" [ref=e172]:
+            - generic [ref=e173]: Intensity
+            - paragraph [ref=e174]: From 1 (barely there) to 5 (all-consuming).
+            - radiogroup "Intensity from 1 to 5" [ref=e175]:
+              - generic [ref=e176] [cursor=pointer]:
+                - radio "1" [ref=e177]
+                - generic [ref=e178]: "1"
+              - generic [ref=e179] [cursor=pointer]:
+                - radio "2" [ref=e180]
+                - generic [ref=e181]: "2"
+              - generic [ref=e182] [cursor=pointer]:
+                - radio "3" [checked] [ref=e183]
+                - generic [ref=e184]: "3"
+              - generic [ref=e185] [cursor=pointer]:
+                - radio "4" [ref=e186]
+                - generic [ref=e187]: "4"
+              - generic [ref=e188] [cursor=pointer]:
+                - radio "5" [ref=e189]
+                - generic [ref=e190]: "5"
+          - group "Body sensations" [ref=e191]:
+            - generic [ref=e192]: Body sensations
+            - paragraph [ref=e193]: Pick any that apply right now.
+            - generic [ref=e194]:
+              - generic [ref=e195] [cursor=pointer]:
+                - checkbox "Tight chest" [ref=e196]
+                - generic [ref=e197]: Tight chest
+              - generic [ref=e198] [cursor=pointer]:
+                - checkbox "Shallow breath" [ref=e199]
+                - generic [ref=e200]: Shallow breath
+              - generic [ref=e201] [cursor=pointer]:
+                - checkbox "Heavy shoulders" [ref=e202]
+                - generic [ref=e203]: Heavy shoulders
+              - generic [ref=e204] [cursor=pointer]:
+                - checkbox "Warm face" [ref=e205]
+                - generic [ref=e206]: Warm face
+              - generic [ref=e207] [cursor=pointer]:
+                - checkbox "Knot in stomach" [ref=e208]
+                - generic [ref=e209]: Knot in stomach
+              - generic [ref=e210] [cursor=pointer]:
+                - checkbox "Racing heart" [ref=e211]
+                - generic [ref=e212]: Racing heart
+              - generic [ref=e213] [cursor=pointer]:
+                - checkbox "Tingling hands" [ref=e214]
+                - generic [ref=e215]: Tingling hands
+              - generic [ref=e216] [cursor=pointer]:
+                - checkbox "Heavy limbs" [ref=e217]
+                - generic [ref=e218]: Heavy limbs
+          - generic [ref=e219]:
+            - generic [ref=e220]: Unmet need
+            - textbox "Unmet need" [ref=e221]:
+              - /placeholder: e.g. rest, connection, clarity
+            - paragraph [ref=e222]: What might you be needing? (optional)
+          - generic [ref=e223]:
+            - link "Cancel" [ref=e224] [cursor=pointer]:
+              - /url: /journal
+            - button "Save entry" [ref=e225]
